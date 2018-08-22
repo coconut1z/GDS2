@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour {
     public int enemiesToSpawn;
+    private int heavyEnemiesToSpawn;
     public GameObject enemy;
+    public GameObject enemyHeavy;
     public float spawnTimer;
     public float timeBetweenSpawns;
     public Transform spawnPoint;
+    public Transform spawnPointHeavy;
     public bool isSpawning;
     public bool hasSetSpawn;
 
@@ -39,12 +42,24 @@ public class EnemySpawner : MonoBehaviour {
     }
 
     public void SpawnEnemies() {
-        if (enemiesToSpawn > 0) {
+
+        if (heavyEnemiesToSpawn > 0)
+        {
+            spawnTimer += Time.deltaTime;
+            GameObject newHeavy = Instantiate(enemyHeavy, spawnPointHeavy);
+            newHeavy.GetComponent<EnemyController>().attack *= threatCont.threatLevel;
+            newHeavy.GetComponent<EnemyController>().MoveToAttack(spawnPoint.childCount - 1);
+            heavyEnemiesToSpawn--;
+            spawnTimer -= timeBetweenSpawns;
+        }
+            if (enemiesToSpawn > 0) {
+
+            Debug.Log(threatCont.threatLevel);
             spawnTimer += Time.deltaTime;
             if (spawnTimer >= timeBetweenSpawns) {
                 GameObject newEnemy = Instantiate(enemy, spawnPoint);
                 newEnemy.GetComponent<EnemyController>().attack *= threatCont.threatLevel;
-                newEnemy.GetComponent<EnemyController>().MoveToAttack(spawnPoint.childCount-1);
+                newEnemy.GetComponent<EnemyController>().MoveToAttack(spawnPoint.childCount - 1);
                 enemiesToSpawn--;
                 spawnTimer -= timeBetweenSpawns;
             }
@@ -57,6 +72,7 @@ public class EnemySpawner : MonoBehaviour {
     public void SetSpawn() {
         if (Timer._instance.currentTime >= 0.3f && Timer._instance.currentTime <= 0.375f) {
             enemiesToSpawn = 2 * threatCont.threatLevel;
+            heavyEnemiesToSpawn = threatCont.threatLevel - 1;
             hasSetSpawn = true;
         }
     }
