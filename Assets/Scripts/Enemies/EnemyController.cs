@@ -31,7 +31,7 @@ public class EnemyController : MonoBehaviour {
         
     }
 
-	void Update () {
+	void FixedUpdate () {
         if (isMovingToAttack) {
             if (!agent.pathPending) {
                 if (new Vector3(agent.destination.x - transform.position.x, 0f, agent.destination.z - transform.position.z).sqrMagnitude <= agent.stoppingDistance) {
