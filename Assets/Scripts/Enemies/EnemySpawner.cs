@@ -14,6 +14,7 @@ public class EnemySpawner : MonoBehaviour {
     public bool isSpawning;
     public bool hasSetSpawn;
     public float difficultyMultiplier;
+    
     public AudioClip callToArms;
 
     private bool bellSounded = true;
@@ -93,11 +94,9 @@ public class EnemySpawner : MonoBehaviour {
 
     public void SpawnEnemies() {
 
+
         if (heavyEnemiesToSpawn > 0) {
-            if(!bellSounded){
-                //SoundManager.instance.RandomizeSfx(callToArms);
-                //bellSounded = true;
-            }
+            
             Debug.Log("heavy: " + heavyEnemiesToSpawn);
             spawnTimer += Time.deltaTime;
             if (spawnTimer >= timeBetweenSpawns) {
@@ -115,6 +114,7 @@ public class EnemySpawner : MonoBehaviour {
 
         if (enemiesToSpawn > 0) {
             if (!bellSounded) {
+            	Debug.Log("bellSounded");
                 SoundManager.instance.RandomizeSfx(callToArms);
                 bellSounded = true;
             }
