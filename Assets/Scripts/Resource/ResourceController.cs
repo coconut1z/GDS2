@@ -7,6 +7,8 @@ public class ResourceController : MonoBehaviour {
     public int currentResourceAmt;
     public int resourceCollectionAmt;
 
+    public AudioClip ResourceCollected;
+
     public float respawnTimer;
     public float timeToRespawn;
 
@@ -38,12 +40,15 @@ public class ResourceController : MonoBehaviour {
         switch(tag) {
             case "Wood":
                 unit.woodCollected += resourceCollectionAmt;
+                SoundManager.instance.RandomizeSfx(ResourceCollected);
                 break;
             case "Stone":
                 unit.stoneCollected += resourceCollectionAmt;
+                SoundManager.instance.RandomizeSfx(ResourceCollected);
                 break;
             case "Gold":
                 unit.goldCollected += resourceCollectionAmt;
+                SoundManager.instance.RandomizeSfx(ResourceCollected);
                 break;
             default:
                 break;
